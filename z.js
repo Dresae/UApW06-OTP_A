@@ -1,5 +1,5 @@
 // Initialize EmailJS with your public key
-emailjs.init("J7ZRHQe-3VkihBImj");
+emailjs.init("YOUR_KEY");
 
 let currentOTP = '';
 let currentEmail = '';
@@ -38,8 +38,8 @@ async function handleEmailSubmit(event) {
     try {
         // Send email using EmailJS
         await emailjs.send(
-            "service_znxpxfa",
-            "template_mr850l5",
+            "YOUR_SERVICE_ID",
+            "YOUR_TEMPLATE_ID",
             {
                 to_email: currentEmail,
                 otp: currentOTP
