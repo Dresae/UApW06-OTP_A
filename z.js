@@ -28,3 +28,37 @@ function showNotification(message, type) {
 function generateOTP() {
     return Math.floor(100000 + Math.random() * 900000).toString();
 }
+
+// Handle email submission
+async function handleEmailSubmit(event) {
+    event.preventDefault();
+    currentEmail = document.getElementById('email').value;
+    currentOTP = generateOTP();
+
+    try {
+        // Send email using EmailJS
+        await emailjs.send(
+            "service_znxpxfa",
+            "template_mr850l5",
+            {
+                to_email: currentEmail,
+                otp: currentOTP
+            }
+        );
+
+        showNotification('OTP sent successfully!', 'success');
+        document.getElementById('step1').classList.remove('active');
+        document.getElementById('step2').classList.add('active');
+    } catch (error) {
+        showNotification('Failed to send OTP. Please try again.', 'error');
+    }
+}
+
+// Handle OTP input navigation
+function moveToNext(input, index) {
+    if (input.value.length === input.maxLength) {
+        if (index < 5) {
+            document.getElementsByClassName('otp-inputs')[0].children[index + 1].focus();
+        }
+    }
+}
