@@ -62,3 +62,35 @@ function moveToNext(input, index) {
         }
     }
 }
+
+// Verify OTP
+function verifyOTP() {
+    const inputs = document.getElementsByClassName('otp-inputs')[0].children;
+    const enteredOTP = Array.from(inputs).map(input => input.value).join('');
+
+    if (enteredOTP === currentOTP) {
+        showNotification('Authentication successful!', 'success');
+        document.getElementById('step2').classList.remove('active');
+        document.getElementById('step3').classList.add('active');
+        localStorage.setItem('authenticated', 'true');
+        localStorage.setItem('userEmail', currentEmail);
+    } else {
+        showNotification('Invalid OTP. Please try again.', 'error');
+    }
+}
+
+// Logout function
+function logout() {
+    localStorage.removeItem('authenticated');
+    localStorage.removeItem('userEmail');
+    location.reload();
+}
+
+// Check if user is already authenticated
+window.onload = function() {
+    if (localStorage.getItem('authenticated') === 'true') {
+        document.getElementById('step1').classList.remove('active');
+        document.getElementById('step3').classList.add('active');
+        currentEmail = localStorage.getItem('userEmail');
+    }
+}
